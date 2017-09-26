@@ -1,0 +1,732 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.2" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="maven,tomcat,打包部署,命令行," />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/images/favicon.jpg?v=5.1.2" />
+
+
+
+
+
+
+<meta name="description" content="我们公司的后端是用maven来构建java项目，服务器用的tomcat，开发人员写代码是用myeclipse或者intellij idea，不管那种ide都特别耗内存，前端并不需要写java代码，但是前后端联调的时候为了把项目跑起来，也必须要使用这类ide，当然也可以用来写前端代码，但是不得不吐槽太烂了。">
+<meta name="keywords" content="maven,tomcat,打包部署,命令行">
+<meta property="og:type" content="article">
+<meta property="og:title" content="命令行打包maven项目并部署到tomcat">
+<meta property="og:url" content="http://yoursite.com/2017/03/18/命令行打包maven项目并部署到tomcat/index.html">
+<meta property="og:site_name" content="九重天上现星辰">
+<meta property="og:description" content="我们公司的后端是用maven来构建java项目，服务器用的tomcat，开发人员写代码是用myeclipse或者intellij idea，不管那种ide都特别耗内存，前端并不需要写java代码，但是前后端联调的时候为了把项目跑起来，也必须要使用这类ide，当然也可以用来写前端代码，但是不得不吐槽太烂了。">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2017-09-26T06:20:36.743Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="命令行打包maven项目并部署到tomcat">
+<meta name="twitter:description" content="我们公司的后端是用maven来构建java项目，服务器用的tomcat，开发人员写代码是用myeclipse或者intellij idea，不管那种ide都特别耗内存，前端并不需要写java代码，但是前后端联调的时候为了把项目跑起来，也必须要使用这类ide，当然也可以用来写前端代码，但是不得不吐槽太烂了。">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    version: '5.1.2',
+    sidebar: {"position":"left","display":"always","offset":12,"offset_float":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2017/03/18/命令行打包maven项目并部署到tomcat/"/>
+
+
+
+
+
+  <title>命令行打包maven项目并部署到tomcat | 九重天上现星辰</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">九重天上现星辰</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">欲买桂花同载酒,终不似,少年游。</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/03/18/命令行打包maven项目并部署到tomcat/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="牛小星">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="九重天上现星辰">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">命令行打包maven项目并部署到tomcat</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-03-18T18:11:00+08:00">
+                2017-03-18
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/技术分享/" itemprop="url" rel="index">
+                    <span itemprop="name">技术分享</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>我们公司的后端是用maven来构建java项目，服务器用的tomcat，开发人员写代码是用myeclipse或者intellij idea，不管那种ide都特别耗内存，前端并不需要写java代码，但是前后端联调的时候为了把项目跑起来，也必须要使用这类ide，当然也可以用来写前端代码，但是不得不吐槽太烂了。<br><a id="more"></a><br>前端平时会选择自己的编辑器写代码，但是写完刷新浏览器并不能立马看到效果，因为需要等待myeclipse将文件同步到tomcat中，电脑稍差的，可能要等很久。为了提高工作效率，会使用grunt、gulp等自动化工具来完成一些重复的工作，比如代码压缩、修改版本号等，如果操作的文件过多甚至会导致电脑卡死。平时为了测试兼容性要开好几款浏览器，切图也要开AI/PS/FW以及其它杂七杂八的软件，再加上myeclipse这个特别占内存的ide，电脑就会很卡。。。</p>
+<p>如果不用启动myeclipse，又能完成项目的部署，上面的这些的问题岂不是就能得到解决？能想到方法就是通过命令行去部署。</p>
+<p>这里需要使用tomcat7-maven-plugin这个插件，在使用之前需要完成一些简单的配置：</p>
+<h4 id="1-配置环境变量"><a href="#1-配置环境变量" class="headerlink" title="1.配置环境变量"></a>1.配置环境变量</h4><p>新建系统变量：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">JAVA_HOME        D:\Java\jdk1.6.0_39（jdk安装目录）</div><div class="line">CLASSPATH        .;%JAVA_HOME%\lib</div><div class="line">CATALINA_HOME    D:\Tomcat（tomcat根目录）</div><div class="line">JAVA_OPTS        -Xms512m -Xmx1024m -XX:MaxNewSize=512m -XX:PermSize=512m -XX:MaxPermSize=512m（不设置的话启动tomcat会报PermGen space错误）</div></pre></td></tr></table></figure></p>
+<p>Path中新增：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">;%JAVA_HOME%\bin</div><div class="line">;D:\maven\apache-maven-3.1.1\bin（maven目录下的bin目录）</div><div class="line">;%CATALINA_HOME%\bin</div></pre></td></tr></table></figure></p>
+<h4 id="2-修改配置文件"><a href="#2-修改配置文件" class="headerlink" title="2.修改配置文件"></a>2.修改配置文件</h4><p>tomcat7-maven-plugin需要用到tomcat中的manager应用，检查webapps目录中有没有manager这个文件夹，没有的请<a href="http://on0g6xqmw.bkt.clouddn.com/manager.rar" target="_blank" rel="external">下载</a>，该应用默认是禁用的，开启它需要修改tomcat目录中/conf/tomcat-users.xml，在tomcat-users中新增：<br><figure class="highlight html"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"><span class="tag">&lt;<span class="name">role</span> <span class="attr">rolename</span>=<span class="string">"manager-script"</span>/&gt;</span>    </div><div class="line"><span class="tag">&lt;<span class="name">user</span> <span class="attr">username</span>=<span class="string">"admin"</span> <span class="attr">password</span>=<span class="string">"admin"</span> <span class="attr">roles</span>=<span class="string">"manager-script"</span>/&gt;</span></div></pre></td></tr></table></figure></p>
+<p>打开maven安装目录中/apache-maven-3.1.1/conf/settings.xml，在servers（settings子节点）中新增<br><figure class="highlight html"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"><span class="tag">&lt;<span class="name">server</span>&gt;</span>  </div><div class="line">    <span class="tag">&lt;<span class="name">id</span>&gt;</span>tomcat7<span class="tag">&lt;/<span class="name">id</span>&gt;</span>  </div><div class="line">    <span class="comment">&lt;!-- username、password和tomcat-users.xml中的一致 --&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">username</span>&gt;</span>admin<span class="tag">&lt;/<span class="name">username</span>&gt;</span>  </div><div class="line">    <span class="tag">&lt;<span class="name">password</span>&gt;</span>admin<span class="tag">&lt;/<span class="name">password</span>&gt;</span>  </div><div class="line"><span class="tag">&lt;/<span class="name">server</span>&gt;</span></div></pre></td></tr></table></figure></p>
+<p>打开项目根目录中pom.xml，在plugins（build子节点）中新增：<br><figure class="highlight html"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div></pre></td><td class="code"><pre><div class="line"><span class="tag">&lt;<span class="name">plugin</span>&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.apache.tomcat.maven<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></div><div class="line">     <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>tomcat7-maven-plugin<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">version</span>&gt;</span>2.2<span class="tag">&lt;/<span class="name">version</span>&gt;</span></div><div class="line">     <span class="tag">&lt;<span class="name">configuration</span>&gt;</span></div><div class="line">        <span class="tag">&lt;<span class="name">url</span>&gt;</span>http://localhost:8080/manager/text<span class="tag">&lt;/<span class="name">url</span>&gt;</span></div><div class="line">        <span class="comment">&lt;!-- server值和settings.xml中id相同 --&gt;</span></div><div class="line">        <span class="tag">&lt;<span class="name">server</span>&gt;</span>tomcat7<span class="tag">&lt;/<span class="name">server</span>&gt;</span>  </div><div class="line">        <span class="comment">&lt;!-- username、password和tomcat-users.xml中的一致 --&gt;</span></div><div class="line">        <span class="tag">&lt;<span class="name">username</span>&gt;</span>admin<span class="tag">&lt;/<span class="name">username</span>&gt;</span>  </div><div class="line">        <span class="tag">&lt;<span class="name">password</span>&gt;</span>admin<span class="tag">&lt;/<span class="name">password</span>&gt;</span></div><div class="line">        <span class="comment">&lt;!-- path值为项目名 --&gt;</span></div><div class="line">        <span class="tag">&lt;<span class="name">path</span>&gt;</span>/$&#123;project.artifactId&#125;<span class="tag">&lt;/<span class="name">path</span>&gt;</span></div><div class="line">    <span class="tag">&lt;/<span class="name">configuration</span>&gt;</span></div><div class="line"><span class="tag">&lt;/<span class="name">plugin</span>&gt;</span></div></pre></td></tr></table></figure></p>
+<p>上面配置完成之后，<span style="color:#f00;">首先需要启动tomcat</span>，直接双击tomcat目录/bin/startup.bat或者在cmd中输入命令：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">catalina.bat run</div></pre></td></tr></table></figure></p>
+<p>等待tomcat启动完毕后，cmd定位到项目根目录，输入命令：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">mvn tomcat7:redeploy （后端提交java代码都要执行）</div></pre></td></tr></table></figure></p>
+<p>第一次执行可能会下载很多依赖包，部署过程中会在tomcat目录webapps文件夹下生成war文件以及对应文件名的文件夹，等部署完成，直接浏览器打开项目地址就可以了。如果在tomcat启动过程是由于少jar包导致报错了，需要将缺失的jar包放到项目根目录/src/main/webapp/WEB-INF/lib/中去；如果是PermGen space错误看看是不是环境变量中没有配置JAVA_OPTS（上面有说）；如果是其它错误那就请教java开发人员吧。</p>
+<p>这里强烈推荐<a href="http://www.vscode.org/" target="_blank" rel="external">vscode</a>来写前端代码，里面自带了命令行终端用来完成项目打包部署，再安装svn插件用来更新和提交项目代码，通过gulp将前端代码同步到tomcat中，卧槽！想想就很爽！</p>
+<h4 id="note"><a href="#note" class="headerlink" title="note:"></a>note:</h4><p>用gulp将文件同步到tomcat中建议使用<a href="https://github.com/sindresorhus/gulp-changed" target="_blank" rel="external">gulp-changed</a>这个模块，仅将修改的文件同步过去，这样会很快，该模块第二个参数hasChanged建议设置为changed.compareSha1Digest，示例如下：<br><figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">var</span> gulp = <span class="built_in">require</span>(<span class="string">'gulp'</span>);</div><div class="line"><span class="keyword">var</span> changed = <span class="built_in">require</span>(<span class="string">'gulp-changed'</span>);</div><div class="line"></div><div class="line"><span class="keyword">var</span> url = <span class="string">'./src/main/webapp/Contents/'</span>;</div><div class="line"><span class="keyword">var</span> tomcaturl = <span class="string">'../../tomcat/webapps/ROOT/Contents/'</span>;</div><div class="line"></div><div class="line">gulp.task(<span class="string">'movetotomcat'</span>, <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</div><div class="line">	gulp.src([url+<span class="string">'**/*.*'</span>])</div><div class="line">	     .pipe(changed(tomcaturl, &#123;<span class="attr">hasChanged</span>:changed.compareSha1Digest&#125;))</div><div class="line">	     .pipe(gulp.dest(tomcaturl))</div><div class="line">&#125;);</div><div class="line"></div><div class="line">gulp.task(<span class="string">'watch'</span>, <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</div><div class="line">	gulp.watch([url+<span class="string">'**/*.*'</span>], [<span class="string">'movetotomcat'</span>]);</div><div class="line">&#125;);</div><div class="line"></div><div class="line">gulp.task(<span class="string">'default'</span>, [<span class="string">'watch'</span>]);</div></pre></td></tr></table></figure></p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/maven/" rel="tag"># maven</a>
+          
+            <a href="/tags/tomcat/" rel="tag"># tomcat</a>
+          
+            <a href="/tags/打包部署/" rel="tag"># 打包部署</a>
+          
+            <a href="/tags/命令行/" rel="tag"># 命令行</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2016/12/25/制作iconfont图标/" rel="next" title="制作iconfont图标">
+                <i class="fa fa-chevron-left"></i> 制作iconfont图标
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2017/09/26/hello-world/" rel="prev" title="Hello World">
+                Hello World <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          
+            <img class="site-author-image" itemprop="image"
+              src="/images/avatar.jpg"
+              alt="牛小星" />
+          
+            <p class="site-author-name" itemprop="name">牛小星</p>
+            <p class="site-description motion-element" itemprop="description">风卷江湖雨闇村 , 四山声作海涛翻。 溪柴火软蛮毡暖 , 我与狸奴不出门。</p>
+        </div>
+
+        <nav class="site-state motion-element">
+
+          
+            <div class="site-state-item site-state-posts">
+            
+              <a href="/archives/">
+            
+                <span class="site-state-item-count">5</span>
+                <span class="site-state-item-name">日志</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-categories">
+              
+                <span class="site-state-item-count">2</span>
+                <span class="site-state-item-name">分类</span>
+              
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-tags">
+              
+                <span class="site-state-item-count">12</span>
+                <span class="site-state-item-name">标签</span>
+              
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+        
+        
+
+        
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-4"><a class="nav-link" href="#1-配置环境变量"><span class="nav-number">1.</span> <span class="nav-text">1.配置环境变量</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-修改配置文件"><span class="nav-number">2.</span> <span class="nav-text">2.修改配置文件</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#note"><span class="nav-number">3.</span> <span class="nav-text">note:</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2017</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">牛小星</span>
+
+  
+</div>
+
+
+  <div class="powered-by">由 <a class="theme-link" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+  <span class="post-meta-divider">|</span>
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">NexT.Pisces</a> v5.1.2</div>
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.2"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.2"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.2"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.2"></script>
+
+
+
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.2"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.2"></script>
+
+
+  
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.2"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

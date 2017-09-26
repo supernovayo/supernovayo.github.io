@@ -53,7 +53,7 @@
 <link href="/css/main.css?v=5.1.2" rel="stylesheet" type="text/css" />
 
 
-  <meta name="keywords" content="Hexo, NexT" />
+  <meta name="keywords" content="兼容性,360,autocomplete,踩坑," />
 
 
 
@@ -69,17 +69,27 @@
 
 
 
-<meta name="description" content="Welcome to Hexo! This is your very first post. Check documentation for more info. If you get any problems when using Hexo, you can find the answer in troubleshooting or you can ask me on GitHub. Quick">
+<meta name="description" content="因为业务需求，在写一个注册页面的时候，发现浏览器会自动填充此域名下已经保存的账号密码，给用户带来不便。加了HTML5新属性 ：autocomplete = “off” ，但是并没有产生效果。  反复测试后发现填充机制是满足下面的格式就自动填充: 12&amp;lt;input type=&amp;quot;text&amp;quot;/&amp;gt;&amp;lt;input type=&amp;quot;password&amp;quot;/&amp;">
+<meta name="keywords" content="兼容性,360,autocomplete,踩坑">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Hello World">
-<meta property="og:url" content="http://yoursite.com/2017/09/26/hello-world/index.html">
+<meta property="og:title" content="autocomplete属性失效的解决方法">
+<meta property="og:url" content="http://yoursite.com/2016/12/02/AboutAutocomplete/index.html">
 <meta property="og:site_name" content="九重天上现星辰">
-<meta property="og:description" content="Welcome to Hexo! This is your very first post. Check documentation for more info. If you get any problems when using Hexo, you can find the answer in troubleshooting or you can ask me on GitHub. Quick">
+<meta property="og:description" content="因为业务需求，在写一个注册页面的时候，发现浏览器会自动填充此域名下已经保存的账号密码，给用户带来不便。加了HTML5新属性 ：autocomplete = “off” ，但是并没有产生效果。  反复测试后发现填充机制是满足下面的格式就自动填充: 12&amp;lt;input type=&amp;quot;text&amp;quot;/&amp;gt;&amp;lt;input type=&amp;quot;password&amp;quot;/&amp;">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2017-09-26T01:33:59.706Z">
+<meta property="og:image" content="http://yoursite.com/2016/12/02/AboutAutocomplete/AboutAutocomplete/776540-20161202172051006-1158529813.jpg">
+<meta property="og:image" content="http://yoursite.com/2016/12/02/AboutAutocomplete/AboutAutocomplete/776540-20161202172045224-2010215868.gif">
+<meta property="og:image" content="http://yoursite.com/2016/12/02/AboutAutocomplete/AboutAutocomplete/776540-20161202174308584-84956273.jpg">
+<meta property="og:image" content="http://yoursite.com/2016/12/02/AboutAutocomplete/AboutAutocomplete/776540-20161202174319334-335456141.jpg">
+<meta property="og:image" content="http://yoursite.com/2016/12/02/AboutAutocomplete/AboutAutocomplete/776540-20161202174324740-565452152.jpg">
+<meta property="og:image" content="http://yoursite.com/2016/12/02/AboutAutocomplete/AboutAutocomplete/776540-20161202173759599-1098408520.jpg">
+<meta property="og:image" content="http://yoursite.com/2016/12/02/AboutAutocomplete/AboutAutocomplete/776540-20161202172028974-1919728818.jpg">
+<meta property="og:image" content="http://yoursite.com/2016/12/02/AboutAutocomplete/AboutAutocomplete/776540-20161202172048787-1713437256.jpg">
+<meta property="og:updated_time" content="2017-09-26T06:20:36.658Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Hello World">
-<meta name="twitter:description" content="Welcome to Hexo! This is your very first post. Check documentation for more info. If you get any problems when using Hexo, you can find the answer in troubleshooting or you can ask me on GitHub. Quick">
+<meta name="twitter:title" content="autocomplete属性失效的解决方法">
+<meta name="twitter:description" content="因为业务需求，在写一个注册页面的时候，发现浏览器会自动填充此域名下已经保存的账号密码，给用户带来不便。加了HTML5新属性 ：autocomplete = “off” ，但是并没有产生效果。  反复测试后发现填充机制是满足下面的格式就自动填充: 12&amp;lt;input type=&amp;quot;text&amp;quot;/&amp;gt;&amp;lt;input type=&amp;quot;password&amp;quot;/&amp;">
+<meta name="twitter:image" content="http://yoursite.com/2016/12/02/AboutAutocomplete/AboutAutocomplete/776540-20161202172051006-1158529813.jpg">
 
 
 
@@ -109,13 +119,13 @@
 
 
 
-  <link rel="canonical" href="http://yoursite.com/2017/09/26/hello-world/"/>
+  <link rel="canonical" href="http://yoursite.com/2016/12/02/AboutAutocomplete/"/>
 
 
 
 
 
-  <title>Hello World | 九重天上现星辰</title>
+  <title>autocomplete属性失效的解决方法 | 九重天上现星辰</title>
   
 
 
@@ -252,7 +262,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/09/26/hello-world/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2016/12/02/AboutAutocomplete/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="牛小星">
@@ -269,7 +279,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">Hello World</h1>
+          <h1 class="post-title" itemprop="name headline">autocomplete属性失效的解决方法</h1>
         
 
         <div class="post-meta">
@@ -281,8 +291,8 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-09-26T09:33:59+08:00">
-                2017-09-26
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2016-12-02T18:14:45+08:00">
+                2016-12-02
               </time>
             
 
@@ -291,6 +301,28 @@
             
           </span>
 
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/踩坑记录/" itemprop="url" rel="index">
+                    <span itemprop="name">踩坑记录</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
           
 
           
@@ -319,15 +351,24 @@
       
 
       
-        <p>Welcome to <a href="https://hexo.io/" target="_blank" rel="external">Hexo</a>! This is your very first post. Check <a href="https://hexo.io/docs/" target="_blank" rel="external">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a href="https://hexo.io/docs/troubleshooting.html" target="_blank" rel="external">troubleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues" target="_blank" rel="external">GitHub</a>.</p>
-<h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ hexo new <span class="string">"My New Post"</span></div></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/writing.html" target="_blank" rel="external">Writing</a></p>
-<h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ hexo server</div></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/server.html" target="_blank" rel="external">Server</a></p>
-<h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ hexo generate</div></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/generating.html" target="_blank" rel="external">Generating</a></p>
-<h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ hexo deploy</div></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/deployment.html" target="_blank" rel="external">Deployment</a></p>
+        <p>　　因为业务需求，在写一个注册页面的时候，发现浏览器会自动填充此域名下已经保存的账号密码，给用户带来不便。加了HTML5新属性 <strong>：autocomplete = “off”</strong> ，但是并没有产生效果。</p>
+<p><img src="AboutAutocomplete/776540-20161202172051006-1158529813.jpg" alt="1"></p>
+<p>反复测试后发现填充机制是满足下面的格式就自动填充:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">&lt;input type=&quot;text&quot;/&gt;</div><div class="line">&lt;input type=&quot;password&quot;/&gt;</div></pre></td></tr></table></figure>
+<p>　　firefox和360浏览器的处理方式是：只要检测到页面里有满足填充机制的，不管是不是<strong>display：none</strong> ,只要检测到就直接往里填充。而且是有几个符合条件的就填充几个。</p>
+<a id="more"></a>
+<p><img src="AboutAutocomplete/776540-20161202172045224-2010215868.gif" alt="1"></p>
+<p>　　而chrome 54版本略有不同：满足上面的条件且页面里只有一个<strong>type=password</strong> 的input。才会自动给第一个<strong>type=text</strong> 的input填充账号，给<strong>type=password</strong> 的input填充密码。所以chrome 54版本不存在注册页面自动填充的问题。</p>
+<p>　　Google出来的方法是修改input的type : 页面里input都写成<strong>type=text</strong>，等获得焦点的时候给改成<strong>type=password</strong>。下意识去搜了下IE下修改type，发现IE下type是个只读属性，修改type的方法并不能兼容IE。</p>
+<p><img src="AboutAutocomplete/776540-20161202174308584-84956273.jpg" alt="1"></p>
+<p>还有说加属性 <strong>disableautocomplete</strong>的，我试了下不能阻止360浏览器自动填充就没再用。<br>　　于是自己尝试着写了个方法，页面里相应的input写成type=text,当页面加载好后，执行一个10毫秒的定时器，remove掉这些input，重新给页面里添加type=password 的input 。相对应的事件都改成用on绑定。firefox下自动填充的问题解决了，并且也兼容了IE，但是，360浏览器你什么时候添加他什么时候就给你填充</p>
+<p><img src="AboutAutocomplete/776540-20161202174319334-335456141.jpg" alt="1"> </p>
+<p>也就是说新增的input，360浏览器也要进行检测，所以这个方法不行。<br>这个时候我有点想放弃了，</p>
+<p><img src="AboutAutocomplete/776540-20161202174324740-565452152.jpg" alt="1"> </p>
+<p>但是突然想到星爷说的话</p>
+<p><img src="AboutAutocomplete/776540-20161202173759599-1098408520.jpg" alt="1"> </p>
+<p>打起精神继续查找方法，最后发现网易邮箱的输入框是这么写的：<strong>autocomplete=”new-password”</strong> ，尝试了一下，竟然成功兼容360了！<br><img src="AboutAutocomplete/776540-20161202172028974-1919728818.jpg" alt="1"><br>然后试了下给input加 <strong>readonly</strong>，写在定时器里removeAttr 掉只读属性，因为<strong>360浏览器</strong>对检测过的input不再检测，所以也能阻止360浏览器自动填充同时兼容IE。<br>总结解决方法：<br>在前面加一个<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">&lt;input type=&quot;password&quot;/&gt;</div></pre></td></tr></table></figure></p>
+<p>并设置display：none; （为了解决360兼容模式/ie）<br>然后给显示的所有input（我的场景只有三个input，如果是注册页面可以试试只给type=password的input以及之前的type=text 的input加） 加上autocomplete=”new-password” 。自测firefox 360极速/兼容模式下完美解决自动填充问题。<br>至于给 type=password 的input加 readonly 再remove掉的方法不太优雅，就不采用了。<br><img src="AboutAutocomplete/776540-20161202172048787-1713437256.jpg" alt="1">    </p>
 
       
     </div>
@@ -343,6 +384,18 @@
 
     <footer class="post-footer">
       
+        <div class="post-tags">
+          
+            <a href="/tags/兼容性/" rel="tag"># 兼容性</a>
+          
+            <a href="/tags/360/" rel="tag"># 360</a>
+          
+            <a href="/tags/autocomplete/" rel="tag"># autocomplete</a>
+          
+            <a href="/tags/踩坑/" rel="tag"># 踩坑</a>
+          
+        </div>
+      
 
       
       
@@ -352,8 +405,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2017/03/18/命令行打包maven项目并部署到tomcat/" rel="next" title="命令行打包maven项目并部署到tomcat">
-                <i class="fa fa-chevron-left"></i> 命令行打包maven项目并部署到tomcat
+              <a href="/2016/09/12/桌面右键新建html、css、js文件/" rel="next" title="桌面右键新建html、css、js文件">
+                <i class="fa fa-chevron-left"></i> 桌面右键新建html、css、js文件
               </a>
             
           </div>
@@ -361,6 +414,10 @@
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2016/12/25/制作iconfont图标/" rel="prev" title="制作iconfont图标">
+                制作iconfont图标 <i class="fa fa-chevron-right"></i>
+              </a>
             
           </div>
         </div>
@@ -412,17 +469,8 @@
       
 
       
-        <ul class="sidebar-nav motion-element">
-          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
-            文章目录
-          </li>
-          <li class="sidebar-nav-overview" data-target="site-overview">
-            站点概览
-          </li>
-        </ul>
-      
 
-      <section class="site-overview sidebar-panel">
+      <section class="site-overview sidebar-panel sidebar-panel-active">
         <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
           
             <img class="site-author-image" itemprop="image"
@@ -487,22 +535,6 @@
 
       </section>
 
-      
-      <!--noindex-->
-        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
-          <div class="post-toc">
-
-            
-              
-            
-
-            
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Quick-Start"><span class="nav-number">1.</span> <span class="nav-text">Quick Start</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Create-a-new-post"><span class="nav-number">1.1.</span> <span class="nav-text">Create a new post</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Run-server"><span class="nav-number">1.2.</span> <span class="nav-text">Run server</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Generate-static-files"><span class="nav-number">1.3.</span> <span class="nav-text">Generate static files</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Deploy-to-remote-sites"><span class="nav-number">1.4.</span> <span class="nav-text">Deploy to remote sites</span></a></li></ol></li></ol></div>
-            
-
-          </div>
-        </section>
-      <!--/noindex-->
       
 
       
